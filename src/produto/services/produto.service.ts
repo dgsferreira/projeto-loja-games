@@ -56,7 +56,7 @@ export class ProdutoService {
     });
   }
 
-  async produtosMaisVendidos(limit = 10): Promise<Produto[]> {
+  async produtosMaisVendidos(limit: number): Promise<Produto[]> {
     return this.produtoRepository.find({
       order: {
         vendas: 'DESC',

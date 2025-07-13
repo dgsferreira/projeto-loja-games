@@ -24,12 +24,6 @@ export class ProdutoController {
     return this.produtoService.findAll();
   }
 
-  @Get('/:id')
-  @HttpCode(HttpStatus.OK)
-  findByID(@Param('id', ParseIntPipe) id: number): Promise<Produto> {
-    return this.produtoService.findByID(id);
-  }
-
   @Get('/nome/:nome')
   @HttpCode(HttpStatus.OK)
   findAllByNome(@Param('nome') nome: string): Promise<Produto[]> {
@@ -38,7 +32,9 @@ export class ProdutoController {
 
   @Get('/mais-vendidos')
   @HttpCode(HttpStatus.OK)
-  getMaisVendidos(@Query('limit') limit = 10): Promise<Produto[]> {
+  getMaisVendidos(
+    @Query('limit', ParseIntPipe) limit: number,
+  ): Promise<Produto[]> {
     return this.produtoService.produtosMaisVendidos(Number(limit));
   }
 
@@ -60,6 +56,12 @@ export class ProdutoController {
     };
 
     return this.produtoService.filtrarProdutos(filtro);
+  }
+
+  @Get('/:id')
+  @HttpCode(HttpStatus.OK)
+  findByID(@Param('id', ParseIntPipe) id: number): Promise<Produto> {
+    return this.produtoService.findByID(id);
   }
 
   @Post()
